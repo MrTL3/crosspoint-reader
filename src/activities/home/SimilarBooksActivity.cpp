@@ -51,7 +51,7 @@ bool insufficientHeap() {
 
 // Percent-encodes a query-param value (RFC 3986 unreserved set kept literal).
 std::string urlEncode(const std::string& value) {
-  static constexpr char HEX[] = "0123456789ABCDEF";
+  static constexpr char HEX_DIGITS[] = "0123456789ABCDEF";
   std::string out;
   out.reserve(value.size());
   for (unsigned char c : value) {
@@ -61,8 +61,8 @@ std::string urlEncode(const std::string& value) {
       out += '+';
     } else {
       out += '%';
-      out += HEX[(c >> 4) & 0xF];
-      out += HEX[c & 0xF];
+      out += HEX_DIGITS[(c >> 4) & 0xF];
+      out += HEX_DIGITS[c & 0xF];
     }
   }
   return out;
@@ -248,10 +248,10 @@ void SimilarBooksActivity::loop() {
   if (count == 0) return;
 
   const auto& metrics = UITheme::getInstance().getMetrics();
+  const int pageItems = UITheme::getInstance().getNumberOfItemsPerPage(renderer, true, false, true, true);
   const int contentTop = metrics.topPadding + metrics.headerHeight + metrics.verticalSpacing;
   const int contentHeight =
       renderer.getScreenHeight() - contentTop - metrics.buttonHintsHeight - metrics.verticalSpacing;
-  const int pageItems = UITheme::getInstance().getListPageItems(contentHeight, true);
 
   int touchSel = selectorIndex;
   const auto listTouch = handleListTouch(touchSel, count, contentTop, contentHeight, true);
