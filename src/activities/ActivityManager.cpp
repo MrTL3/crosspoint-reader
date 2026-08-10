@@ -33,7 +33,7 @@ void ActivityManager::begin() {
                           this,               // Parameters
                           1,                  // Priority
                           &renderTaskHandle,  // Task handle
-                          renderTaskCore  // Keep long renders/cover decodes off CPU 0's idle watchdog when available
+                          renderTaskCore  // Keep long renders/cover decodes off CPU 0's idle watchdog when availablee
   );
   assert(renderTaskHandle != nullptr && "Failed to create render task");
 }
